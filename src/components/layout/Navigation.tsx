@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Button } from '../ui/button'
 import { Badge } from '../ui/badge'
 import { Card, CardContent } from '../ui/card'
@@ -16,8 +17,14 @@ import {
 /**
  * Navigation Component
  * แสดงเมนูหลักของแอปพลิเคชัน
+ * - หน้าแรก: แสดงเมนูใหญ่แบบเต็ม
+ * - หน้าอื่นๆ: แสดงแค่ header
  */
 export const Navigation: React.FC = () => {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const isHomePage = location.pathname === '/'
+  
   // Mock ข้อมูล notifications
   const mockNotifications = 3
 
@@ -60,11 +67,18 @@ export const Navigation: React.FC = () => {
     }
   ]
 
+  const handleNavigation = (href: string) => {
+    navigate(href)
+  }
+
   return (
     <nav className="bg-card border-b shadow-sm">
       {/* Header */}
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <div className="flex items-center space-x-3">
+        <div 
+          className="flex items-center space-x-3 cursor-pointer hover:opacity-80 transition-opacity"
+          onClick={() => handleNavigation('/')}
+        >
           <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
             <Package className="w-6 h-6 text-primary-foreground" />
           </div>
@@ -96,24 +110,30 @@ export const Navigation: React.FC = () => {
         </div>
       </div>
 
-      {/* Navigation Grid */}
-      <div className="container mx-auto px-4 pb-4">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-          {navigationItems.map((item, index) => (
-            <Card key={index} className="hover:shadow-md transition-all duration-200 cursor-pointer group border hover:border-primary/20">
-              <CardContent className="p-4 text-center">
-                <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-secondary flex items-center justify-center group-hover:scale-110 transition-transform group-hover:bg-primary/10">
-                  <item.icon className="w-6 h-6 text-primary" />
-                </div>
-                <div className="space-y-1">
-                  <p className="font-medium text-foreground text-sm">{item.title}</p>
-                  <p className="text-xs text-muted-foreground">{item.subtitle}</p>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+      {/* Navigation Grid - แสดงเฉพาะหน้าแรก */}
+      {isHomePage && (
+        <div className="container mx-auto px-4 pb-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+            {navigationItems.map((item, index) => (
+              <Card 
+                key={index} 
+                className="hover:shadow-md transition-all duration-200 cursor-pointer group border hover:border-primary/20"
+                onClick={() => handleNavigation(item.href)}
+              >
+                <CardContent className="p-4 text-center">
+                  <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-secondary flex items-center justify-center group-hover:scale-110 transition-transform group-hover:bg-primary/10">
+                    <item.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <div className="space-y-1">
+                    <p className="font-medium text-foreground text-sm">{item.title}</p>
+                    <p className="text-xs text-muted-foreground">{item.subtitle}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </nav>
   )
 }

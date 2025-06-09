@@ -55,12 +55,20 @@ interface InventoryItem {
   status: 'in_stock' | 'low_stock' | 'out_of_stock'
 }
 
-export const InventoryTable: React.FC = () => {
+interface InventoryTableProps {
+  searchTerm?: string
+  filterStatus?: 'all' | 'low' | 'normal' | 'high'
+}
+
+export const InventoryTable: React.FC<InventoryTableProps> = ({ 
+  searchTerm = '', 
+  filterStatus = 'all' 
+}) => {
   const [isLoading] = useState(false)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   // ข้อมูล Mock
-  const inventoryItems: InventoryItem[] = [
+  const allInventoryItems: InventoryItem[] = [
     {
       id: 'MAT001',
       name: 'เหล็กเส้น 12mm',
@@ -99,8 +107,55 @@ export const InventoryTable: React.FC = () => {
       supplier: 'บริษัท ไม้ C',
       lastUpdated: '2024-01-13',
       status: 'out_of_stock'
+    },
+    {
+      id: 'MAT004',
+      name: 'ทราย',
+      category: 'วัสดุ',
+      currentStock: 80,
+      minStock: 40,
+      maxStock: 300,
+      unit: 'ตัน',
+      price: 150,
+      supplier: 'บริษัท ทราย D',
+      lastUpdated: '2024-01-16',
+      status: 'in_stock'
+    },
+    {
+      id: 'MAT005',
+      name: 'อิฐแดง',
+      category: 'อิฐ',
+      currentStock: 15,
+      minStock: 25,
+      maxStock: 150,
+      unit: 'แถว',
+      price: 75,
+      supplier: 'บริษัท อิฐ E',
+      lastUpdated: '2024-01-14',
+      status: 'low_stock'
     }
   ]
+
+  // ฟิลเตอร์ข้อมูลตาม searchTerm และ filterStatus
+  const filteredItems = allInventoryItems.filter(item => {
+    // ค้นหาตามชื่อ, รหัส, หรือหมวดหมู่
+    const matchesSearch = searchTerm === '' || 
+      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.category.toLowerCase().includes(searchTerm.toLowerCase())
+
+    // กรองตามสถานะ
+    let matchesStatus = true
+    if (filterStatus === 'low') {
+      matchesStatus = item.status === 'low_stock' || item.status === 'out_of_stock'
+    } else if (filterStatus === 'normal') {
+      matchesStatus = item.status === 'in_stock'
+    }
+
+    return matchesSearch && matchesStatus
+  })
+
+  const inventoryItems = filteredItems
 
   const getStatusBadge = (status: string) => {
     switch (status) {
