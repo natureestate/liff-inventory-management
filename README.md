@@ -4,6 +4,7 @@
 
 ## 🚀 Live Demo
 
+- **GitHub Repository**: [https://github.com/natureestate/liff-inventory-management](https://github.com/natureestate/liff-inventory-management)
 - **Production URL**: [https://linestock-e253f.web.app](https://linestock-e253f.web.app)
 - **LIFF URL**: [https://liff.line.me/2007546326-RqNGeGEX](https://liff.line.me/2007546326-RqNGeGEX)
 
@@ -38,8 +39,8 @@
 
 ### 1. Clone Repository
 ```bash
-git clone <repository-url>
-cd liff-inventory
+git clone https://github.com/natureestate/liff-inventory-management.git
+cd liff-inventory-management
 ```
 
 ### 2. Install Dependencies
