@@ -4,7 +4,6 @@ import {
   Package, 
   Plus, 
   Minus, 
-  BarChart3, 
   QrCode,
   Home
 } from 'lucide-react'

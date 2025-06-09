@@ -5,16 +5,14 @@ import { Badge } from '../components/ui/badge'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 import { Progress } from '../components/ui/progress'
-import { Separator } from '../components/ui/separator'
+
 import { 
   BarChart3, 
   TrendingUp, 
   TrendingDown,
   DollarSign,
   Package,
-  Calendar,
   Download,
-  FileText,
   PieChart,
   Activity
 } from 'lucide-react'
@@ -25,7 +23,7 @@ import {
  */
 export const ReportsPage: React.FC = () => {
   const [selectedPeriod, setSelectedPeriod] = useState('week')
-  const [selectedCategory, setSelectedCategory] = useState('all')
+
 
   // ข้อมูล Mock สำหรับสถิติรายงาน
   const overallStats = [

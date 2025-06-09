@@ -10,7 +10,6 @@ import { Alert, AlertDescription } from '../components/ui/alert'
 import { Separator } from '../components/ui/separator'
 import { 
   Plus, 
-  Search, 
   Package,
   CheckCircle,
   AlertCircle,
